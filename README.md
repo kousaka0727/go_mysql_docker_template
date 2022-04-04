@@ -1,0 +1,2 @@
+# go_mysql_docker_template
+golang+MySQLのdockerテンプレート
