@@ -1,0 +1,44 @@
+services:
+  app:
+    container_name: app
+    build:
+      context: .
+      dockerfile: ./.docker/go/Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/go/app
+    restart: always
+    tty: true
+    logging:
+      driver: local
+      options:
+        max-file: "5"
+        max-size: 10m
+    depends_on:
+      - mysql
+
+  mysql:
+    container_name: mysql
+    build: ".docker/mysql"
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      TZ: 'Asia/Tokyo'
+    volumes:
+      - db-data:/var/lib/mysql
+    tty: true
+
+  redis:
+      container_name: redis
+      image: redis:6.2-buster
+      ports:
+          - "6379:6379"
+
+volumes:
+  db-data:
+    driver: local
