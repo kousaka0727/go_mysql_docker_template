@@ -2,19 +2,27 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"time"
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jinzhu/gorm"
+	"github.com/joho/godotenv"
 )
 
+
+func init() {
+	if err := godotenv.Load(".env"); err != nil {
+		log.Printf("err : %v", err)
+		panic("Error loading .env")
+	}
+}
+
+
 func main() {
-	sr := "hello world"
-	fmt.Printf("#%v", sr)
+	fmt.Printf("#%v", "hello world")
 
-
-	
 	db := sqlConnect()
 	defer db.Close()
 
