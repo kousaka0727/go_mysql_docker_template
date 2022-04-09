@@ -1,7 +1,7 @@
 ## go_mysql_docker_template
 Docker-compose template for Golang and MySQL.
 ## Overview
-Provides a simple environment using golang and Mysql
+Provides a simple environment using golang and Mysql <br>
 In addition, this repository is automatically compiled by realize
 ## Usage
 ### about docker-compose
