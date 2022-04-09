@@ -21,7 +21,7 @@ func init() {
 
 
 func main() {
-	fmt.Printf("#%v", "hello world")
+	fmt.Println("hello world !!")
 
 	db := sqlConnect()
 	defer db.Close()
@@ -31,15 +31,17 @@ func main() {
 
 func sqlConnect() (database *gorm.DB) {
 	DBMS := "mysql"
-	PROTOCOL := "tcp(mysql:3306)"
-	USER := os.Getenv("MYSQL_USER")
-	PASS := os.Getenv("MYSQL_PASSWORD")
-	DBNAME := os.Getenv("MYSQL_DATABASE")
-
-	CONNECT := USER + ":" + PASS + "@" + PROTOCOL + "/" + DBNAME + "?charset=utf8&parseTime=true&loc=Asia%2FTokyo"
+	dsn := fmt.Sprintf(
+		"%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",
+		os.Getenv("MYSQL_USER"),
+		os.Getenv("MYSQL_PASSWORD"),
+		"mysql",
+		"3306",
+		os.Getenv("MYSQL_DATABASE"),
+	)
 
 	count := 0
-	db, err := gorm.Open(DBMS, CONNECT)
+	db, err := gorm.Open(DBMS, dsn)
 	if err != nil {
 		for {
 		if err == nil {
@@ -49,15 +51,15 @@ func sqlConnect() (database *gorm.DB) {
 		fmt.Print(".")
 		time.Sleep(time.Second)
 		count++
-		if count > 180 {
+		if count > 50 {
 			fmt.Println("")
-			fmt.Println("DB接続失敗")
+			fmt.Println("Connection to DB failed...")
 			panic(err)
 		}
-		db, err = gorm.Open(DBMS, CONNECT)
+		db, err = gorm.Open(DBMS, dsn)
 		}
 	}
-	fmt.Println("DB接続成功")
+	fmt.Println("Successful connection to DB !! ")
 
 	return db
 }
