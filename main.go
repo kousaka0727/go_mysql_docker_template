@@ -20,22 +20,30 @@ func init() {
 }
 
 func main() {
-	fmt.Println("hello realize !!")
+	fmt.Println("hello realiz2 !!")
+	fmt.Printf("user: %s \n", os.Getenv("MYSQL_USER"))
+	fmt.Printf("pass: %s \n", os.Getenv("MYSQL_PASSWORD"))
+	fmt.Printf("port: %s \n", os.Getenv("MYSQL_PROT"))
+	fmt.Printf("db: %s \n", os.Getenv("MYSQL_DATABASE"))
 
+	fmt.Println("hello realiz2 !!")
 	db := sqlConnect()
 	defer db.Close()
 }
 
 func sqlConnect() (database *gorm.DB) {
+	fmt.Println("通過 !!")
 	DBMS := "mysql"
 	dsn := fmt.Sprintf(
 		"%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",
 		os.Getenv("MYSQL_USER"),
 		os.Getenv("MYSQL_PASSWORD"),
 		"mysql",
-		os.Getenv("MYSQL_PROT"),
+		os.Getenv("MYSQL_PORT"),
 		os.Getenv("MYSQL_DATABASE"),
 	)
+
+	fmt.Println("通過 !!")
 
 	count := 0
 	db, err := gorm.Open(DBMS, dsn)

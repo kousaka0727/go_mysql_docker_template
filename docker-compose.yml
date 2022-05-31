@@ -28,17 +28,12 @@ services:
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-      TZ: 'Asia/Tokyo'
     volumes:
-      - db-data:/var/lib/mysql
-    tty: true
-
+        - ./.docker/mysql/data:/var/lib/mysql/
+        - ./.docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+        - ./.docker/mysql/sql:/docker-entrypoint-initdb.d
   redis:
       container_name: redis
       image: redis:6.2-buster
       ports:
           - "6379:6379"
-
-volumes:
-  db-data:
-    driver: local
