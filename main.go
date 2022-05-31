@@ -19,15 +19,12 @@ func init() {
 	}
 }
 
-
 func main() {
-	fmt.Println("hello world !!")
+	fmt.Println("hello realize !!")
 
 	db := sqlConnect()
 	defer db.Close()
-
 }
-
 
 func sqlConnect() (database *gorm.DB) {
 	DBMS := "mysql"
@@ -36,7 +33,7 @@ func sqlConnect() (database *gorm.DB) {
 		os.Getenv("MYSQL_USER"),
 		os.Getenv("MYSQL_PASSWORD"),
 		"mysql",
-		"3306",
+		os.Getenv("MYSQL_PROT"),
 		os.Getenv("MYSQL_DATABASE"),
 	)
 
